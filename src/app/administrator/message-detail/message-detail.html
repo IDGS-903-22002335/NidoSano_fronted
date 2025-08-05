@@ -1,0 +1,136 @@
+<div class="max-w-3xl mx-auto p-4 space-y-6 font-sans">
+  <!-- Encabezado con estilo mejorado -->
+  <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-5 rounded-xl shadow-sm border border-green-100">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-800">Conversación</h1>
+        <div class="flex items-center mt-1">
+          <span class="inline-block h-3 w-3 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+          <span class="text-sm font-medium text-gray-600">ID: {{mensaje?.id}}</span>
+        </div>
+      </div>
+      <div class="bg-white px-3 py-1 rounded-full shadow-inner border border-green-200">
+        <span class="text-xs font-semibold text-green-600">
+          {{mensaje?.date | date:'mediumDate'}}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje Original - Estilo de tarjeta mejorada -->
+  <div *ngIf="mensaje?.parentMessage" class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-green-400 transform transition-all hover:scale-[1.01]">
+    <div class="flex items-start space-x-4">
+      <!-- Avatar mejorado -->
+      <div class="flex-shrink-0 h-12 w-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center shadow-inner">
+        <span class="text-green-600 font-medium text-lg">{{mensaje.clientName | slice:0:1}}</span>
+      </div>
+      
+      <!-- Contenido mejor organizado -->
+      <div class="flex-1 min-w-0">
+        <div class="flex items-baseline justify-between">
+          <div class="flex items-center space-x-2">
+            <p class="text-base font-semibold text-gray-800">{{mensaje.clientName}}</p>
+            <span class="text-xs px-2 py-0.5 bg-green-100 text-green-800 rounded-full">Cliente</span>
+          </div>
+          <span class="text-xs text-gray-400">{{mensaje.parentMessage.date | date:'shortTime'}}</span>
+        </div>
+        
+        <!-- Texto del mensaje con mejor formato -->
+        <div class="mt-2 text-sm text-gray-700 bg-gray-50 p-3 rounded-lg whitespace-pre-line">
+          {{mensaje.parentMessage.text}}
+        </div>
+        
+        <!-- Badges mejor diseñados -->
+        <div class="mt-3 flex flex-wrap gap-2">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold shadow-sm"
+                [ngClass]="{
+                  'bg-amber-100 text-amber-800 border border-amber-200': mensaje.typeMessage === 0 || mensaje.typeMessage === 1,
+                  'bg-emerald-100 text-emerald-800 border border-emerald-200': mensaje.typeMessage === 2
+                }">
+            {{mensaje.typeMessage === 1 || mensaje.typeMessage === 0 ? 'Pregunta' : 'Comentario'}}
+          </span>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 border border-green-200 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Respondido
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje Actual - Diseño más destacado -->
+  <div *ngIf="mensaje" class="bg-white p-5 rounded-xl shadow-md border-l-4 border-green-500 transform transition-all hover:scale-[1.01] relative">
+    <!-- Indicador de nuevo mensaje -->
+    <div class="absolute -top-2 -left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
+      Nuevo
+    </div>
+    
+    <div class="flex items-start space-x-4">
+      <!-- Avatar con sombra -->
+      <div class="flex-shrink-0 h-12 w-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center shadow-md">
+        <span class="text-green-600 font-medium text-lg">{{mensaje.clientName | slice:0:1}}</span>
+      </div>
+      
+      <div class="flex-1 min-w-0">
+        <div class="flex items-baseline justify-between">
+          <div class="flex items-center space-x-2">
+            <p class="text-base font-semibold text-gray-800">{{mensaje.clientName}}</p>
+            <span class="text-xs px-2 py-0.5 bg-green-100 text-green-800 rounded-full">Cliente</span>
+          </div>
+          <span class="text-xs text-gray-400">{{mensaje.date | date:'shortTime'}}</span>
+        </div>
+        
+        <div class="mt-2 text-sm text-gray-700 bg-green-50 p-3 rounded-lg whitespace-pre-line border border-green-100">
+          {{mensaje.text}}
+        </div>
+        
+        <div class="mt-3 flex flex-wrap gap-2">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold shadow-sm"
+                [ngClass]="{
+                  'bg-amber-100 text-amber-800 border border-amber-200': mensaje.typeMessage === 0,
+                  'bg-emerald-100 text-emerald-800 border border-emerald-200': mensaje.typeMessage === 2
+                }">
+            {{mensaje.typeMessage === 1 || mensaje.typeMessage === 0 ? 'Pregunta' : 'Comentario'}}
+          </span>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 border border-yellow-200 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1 animate-pulse" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+            </svg>
+            Pendiente
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Área de respuesta - Diseño más elegante -->
+  <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
+    <h3 class="text-sm font-medium text-gray-700 mb-3 flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd" />
+      </svg>
+      Responder a este mensaje
+    </h3>
+    
+    <textarea 
+      class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-400 text-sm transition duration-200"
+      rows="4"
+      placeholder="Escribe tu respuesta aquí..."
+      [(ngModel)]="respuestaTexto">
+    </textarea>
+    
+    <div class="mt-4 flex justify-end space-x-3">
+     
+      <button 
+        (click)="enviarRespuesta()"
+        class="px-6 py-2 bg-gradient-to-r from-green-500 to-green-600 text-sm font-medium rounded-lg shadow-md text-white hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400 transition duration-200 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+        </svg>
+        Enviar respuesta
+      </button>
+    </div>
+  </div>
+</div>

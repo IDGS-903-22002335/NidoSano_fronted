@@ -1,0 +1,109 @@
+<div *ngIf="!loading && purchasedProducts.length > 0" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+    <div class="flex items-center">
+      <div class="bg-emerald-100 p-3 rounded-xl mr-4 shadow-inner">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+      </div>
+      <div>
+        <h2 class="text-3xl font-bold text-gray-900">Historial de Compras</h2>
+        <p class="text-emerald-600 font-medium">Tus pedidos recientes</p>
+      </div>
+    </div>
+    <div class="mt-4 md:mt-0">
+      <button class="flex items-center text-emerald-600 hover:text-emerald-800 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        Exportar historial
+      </button>
+    </div>
+  </div>
+  
+  <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
+    <div class="grid grid-cols-12 bg-gray-50 p-4 border-b border-gray-200">
+      <div class="col-span-5 md:col-span-6 font-medium text-gray-500">Producto</div>
+      <div class="col-span-3 md:col-span-2 font-medium text-gray-500 text-center">Cantidad</div>
+      <div class="col-span-2 font-medium text-gray-500 text-center hidden md:block">Estado</div>
+      <div class="col-span-4 md:col-span-2 font-medium text-gray-500 text-right">Total</div>
+    </div>
+    
+    <ul class="divide-y divide-gray-100">
+      <li *ngFor="let product of purchasedProducts" class="hover:bg-gray-50 transition-colors duration-150">
+        <div class="grid grid-cols-12 p-4 items-center">
+          <div class="col-span-5 md:col-span-6">
+            <div class="flex items-center space-x-4">
+              <div class="flex-shrink-0 h-16 w-16 bg-emerald-50 rounded-lg flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800">{{ product.chickenCoop?.name || 'NidoSano' }}</h3>
+                <div class="flex items-center text-sm text-gray-500 mt-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                  Orden #{{ product.saleId }}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-span-3 md:col-span-2 text-center text-gray-700 font-medium">
+            {{ product.quantity }}
+          </div>
+          
+          <div class="col-span-2 text-center hidden md:block">
+            <span [ngClass]="{
+              'bg-emerald-100 text-emerald-800': product.type === 'completed',
+              'bg-blue-100 text-blue-800': product.type === 'processing',
+              'bg-yellow-100 text-yellow-800': product.type === 'pending',
+              'bg-red-100 text-red-800': product.type === 'cancelled'
+            }" class="px-3 py-1 rounded-full text-xs font-medium">
+              {{ getTypeLabel(product.type) }}
+            </span>
+          </div>
+          
+          <div class="col-span-4 md:col-span-2">
+            <div class="flex items-center justify-end space-x-4">
+              <span class="text-lg font-bold text-gray-900">
+                {{ product.total | currency }}
+              </span>
+              <a 
+                [routerLink]="['/compra_cliente_detalle', product.saleId]" 
+                class="inline-flex items-center px-3 py-1.5 border border-gray-200 rounded-lg text-sm font-medium text-emerald-600 hover:bg-emerald-50 hover:border-emerald-100 transition-all duration-200"
+              >
+                Detalle
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    
+    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+      
+     
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading && purchasedProducts.length === 0" class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+  <div class="text-center">
+    <div class="mx-auto h-24 w-24 bg-emerald-50 rounded-full flex items-center justify-center mb-6 shadow-inner">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+    </div>
+    <h3 class="text-2xl font-bold text-gray-900 mb-2">Tu historial está vacío</h3>
+    <p class="text-gray-600 mb-8 max-w-md mx-auto">Aún no has realizado ninguna compra en nuestra tienda. Descubre nuestros productos y haz tu primer pedido.</p>
+    <div class="flex flex-col sm:flex-row justify-center gap-3">
+      
+    </div>
+  </div>
+</div>

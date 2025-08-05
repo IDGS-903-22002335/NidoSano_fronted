@@ -1,0 +1,261 @@
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-lg space-y-6">
+  <!-- Encabezado con texto de la imagen -->
+  <div class="text-center">
+    <h1 class="text-2xl font-bold text-gray-800 mb-2">Solicita una cotización personalizada para tu gallinero inteligente</h1>
+    <p class="text-lg text-gray-600 mb-4">¿Quieres automatizar el cuidado de tus gallinas? Cuéntanos lo que necesitas y diseñamos una solución a tu medida.</p>
+    <mat-icon class="text-4xl text-blue-500 mb-2">request_quote</mat-icon>
+    <h2 class="text-xl font-bold text-gray-800">Vista previa de cotización</h2>
+    <p class="text-gray-500">Complete los detalles para obtener una estimación precisa</p>
+  </div>
+
+  <!-- Resto del formulario (manteniendo toda la funcionalidad existente) -->
+  <form class="space-y-6" (ngSubmit)="generarVistaPrevia()">
+    <!-- Sección de características con diseño de tarjetas -->
+    <div class="bg-blue-50 p-4 rounded-lg">
+      <h3 class="font-semibold text-blue-800 mb-3 flex items-center">
+        <mat-icon class="mr-2">tune</mat-icon>
+        Características del Sistema
+      </h3>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Monitoreo ambiental -->
+        <label class="flex items-start space-x-3 bg-white p-3 rounded-lg border border-gray-200 hover:border-blue-300 transition-colors">
+          <mat-icon class="text-blue-500">monitor</mat-icon>
+          <div>
+            <span class="text-gray-700 font-medium">Monitoreo ambiental</span>
+            <select [(ngModel)]="formData.environmentalMonitoring" name="environmentalMonitoring" 
+                   class="w-full mt-1 p-1 border border-gray-200 rounded">
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </label>
+
+        <!-- Monitoreo calidad de aire -->
+        <label class="flex items-start space-x-3 bg-white p-3 rounded-lg border border-gray-200 hover:border-blue-300 transition-colors">
+          <mat-icon class="text-blue-500">air</mat-icon>
+          <div>
+            <span class="text-gray-700 font-medium">Monitoreo de Calidad del aire</span>
+            <select [(ngModel)]="formData.airQualityMonitoring" name="airQualityMonitoring"
+                   class="w-full mt-1 p-1 border border-gray-200 rounded">
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </label>
+
+        <!-- Monitoreo de luz natural -->
+        <label class="flex items-start space-x-3 bg-white p-3 rounded-lg border border-gray-200 hover:border-blue-300 transition-colors">
+          <mat-icon class="text-blue-500">wb_sunny</mat-icon>
+          <div>
+            <span class="text-gray-700 font-medium">Monitoreo de luz natural</span>
+            <select [(ngModel)]="formData.naturalLightingMonitoring" name="naturalLightingMonitoring"
+                   class="w-full mt-1 p-1 border border-gray-200 rounded">
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </label>
+
+        <!-- Dispensador automático -->
+        <label class="flex items-start space-x-3 bg-white p-3 rounded-lg border border-gray-200 hover:border-blue-300 transition-colors">
+          <mat-icon class="text-blue-500">restaurant</mat-icon>
+          <div>
+            <span class="text-gray-700 font-medium">Dispensador automático de alimento</span>
+            <select [(ngModel)]="formData.automaticFeedDispenser" name="automaticFeedDispenser"
+                   class="w-full mt-1 p-1 border border-gray-200 rounded">
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </label>
+
+        <!-- Medidor de nivel de agua -->
+        <label class="flex items-start space-x-3 bg-white p-3 rounded-lg border border-gray-200 hover:border-blue-300 transition-colors">
+          <mat-icon class="text-blue-500">water_drop</mat-icon>
+          <div>
+            <span class="text-gray-700 font-medium">Medidor de nivel de agua</span>
+            <select [(ngModel)]="formData.waterLevelGauge" name="waterLevelGauge"
+                   class="w-full mt-1 p-1 border border-gray-200 rounded">
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </label>
+
+        <!-- Sensor de movimiento nocturno -->
+        <label class="flex items-start space-x-3 bg-white p-3 rounded-lg border border-gray-200 hover:border-blue-300 transition-colors">
+          <mat-icon class="text-blue-500">nightlight</mat-icon>
+          <div>
+            <span class="text-gray-700 font-medium">Sensor de Movimiento nocturno</span>
+            <select [(ngModel)]="formData.nightMotionSensor" name="nightMotionSensor"
+                   class="w-full mt-1 p-1 border border-gray-200 rounded">
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Sección de configuración -->
+    <div class="bg-purple-50 p-4 rounded-lg">
+      <h3 class="font-semibold text-purple-800 mb-3 flex items-center">
+        <mat-icon class="mr-2">settings</mat-icon>
+        Configuración General
+      </h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Cantidad de gallinas -->
+        <label class="block">
+          <span class="text-gray-700 font-medium">Cantidad de gallinas</span>
+          <div class="relative mt-1">
+            <input type="number" [(ngModel)]="formData.quantityChickens" name="quantityChickens"
+                   class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                   min="1">
+            <span class="absolute right-3 top-2.5 text-gray-400">unidades</span>
+          </div>
+        </label>
+
+        <!-- Instalación física -->
+        <label class="block">
+          <span class="text-gray-700 font-medium">Instalación física</span>
+          <select [(ngModel)]="formData.physicalInstallation" name="physicalInstallation"
+                 class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+            <option value="si">Sí, incluir instalación</option>
+            <option value="no">No, solo equipos</option>
+          </select>
+        </label>
+
+        <!-- Ubicación del gallinero -->
+        <label class="block md:col-span-2">
+          <span class="text-gray-700 font-medium">Ubicación del gallinero</span>
+          <select [(ngModel)]="formData.chickenCoopLocation" name="chickenCoopLocation"
+                 class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+            <option value="interior">Interior</option>
+            <option value="exterior">Exterior</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <label class="block">
+        <span class="text-gray-700 font-medium">Tipo de conexión</span>
+        <select [(ngModel)]="formData.connectionType" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+          <option value="wifi">WiFi</option>
+          <option value="bluetooth">Bluetooth</option>
+        </select>
+      </label>
+
+    <!-- Botón de enviar -->
+    <div class="text-center">
+      <button type="submit" 
+              class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center mx-auto">
+        <mat-icon class="mr-2">calculate</mat-icon>
+        Generar Vista Previa
+      </button>
+    </div>
+  </form>
+
+  <!-- Resultado -->
+  <div *ngIf="precioTotal !== null" class="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-200">
+    <div class="flex items-center justify-between">
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800">Precio total estimado</h3>
+        <p class="text-gray-600">Incluye todos los componentes seleccionados</p>
+      </div>
+      <span class="text-3xl font-bold text-green-600">${{ precioTotal | number:'1.2-2' }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Formulario "Cuéntanos sobre ti" (se mantiene exactamente igual) -->
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-lg space-y-6 mt-8">
+  <!-- Encabezado del formulario -->
+  <div class="text-center">
+    <mat-icon class="text-4xl text-indigo-500 mb-2">person_add</mat-icon>
+    <h2 class="text-2xl font-bold text-gray-800">Cuéntanos sobre ti</h2>
+    <p class="text-gray-500">Proporciona tus datos para establecer contacto contigo </p>
+  </div>
+
+  <form #clienteForm="ngForm" (ngSubmit)="registrarClientePosible(clienteForm)" novalidate class="space-y-4">
+    <!-- Grid de dos columnas para pantallas medianas/grandes -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Nombre -->
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-gray-700">Nombre*</label>
+        <input type="text" name="name" [(ngModel)]="nuevoCliente.name" required
+               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        <div *ngIf="clienteForm.submitted && clienteForm.form.controls['name']?.invalid" 
+             class="text-sm text-red-600">
+          El nombre es requerido
+        </div>
+      </div>
+
+      <!-- Apellido -->
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-gray-700">Apellido*</label>
+        <input type="text" name="lastName" [(ngModel)]="nuevoCliente.lastName" required
+               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        <div *ngIf="clienteForm.submitted && clienteForm.form.controls['lastName']?.invalid" 
+             class="text-sm text-red-600">
+          El apellido es requerido
+        </div>
+      </div>
+
+      <!-- Teléfono -->
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-gray-700">Teléfono*</label>
+        <input type="tel" name="phoneNumber" [(ngModel)]="nuevoCliente.phoneNumber" 
+               pattern="^[0-9]{10}$" required
+               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+               placeholder="10 dígitos">
+        <div *ngIf="clienteForm.submitted && clienteForm.form.controls['phoneNumber']?.invalid" 
+             class="text-sm text-red-600">
+          Debe tener 10 dígitos numéricos
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-gray-700">Correo electrónico*</label>
+        <input type="email" name="email" [(ngModel)]="nuevoCliente.email" required email
+               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        <div *ngIf="clienteForm.submitted && clienteForm.form.controls['email']?.invalid" 
+             class="text-sm text-red-600">
+          Ingresa un correo electrónico válido
+        </div>
+      </div>
+
+      <!-- Ciudad -->
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-gray-700">Ciudad*</label>
+        <input type="text" name="city" [(ngModel)]="nuevoCliente.city" required
+               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        <div *ngIf="clienteForm.submitted && clienteForm.form.controls['city']?.invalid" 
+             class="text-sm text-red-600">
+          La ciudad es requerida
+        </div>
+      </div>
+
+      <!-- Estado -->
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-gray-700">Estado*</label>
+        <input type="text" name="state" [(ngModel)]="nuevoCliente.state" required
+               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+        <div *ngIf="clienteForm.submitted && clienteForm.form.controls['state']?.invalid" 
+             class="text-sm text-red-600">
+          El estado es requerido
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón de enviar -->
+    <div class="pt-4 text-center">
+      <button type="submit" 
+              class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center mx-auto">
+        <mat-icon class="mr-2">send</mat-icon>
+        Enviar información
+      </button>
+    </div>
+  </form>
+</div>

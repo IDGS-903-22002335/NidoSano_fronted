@@ -1,0 +1,230 @@
+<div *ngIf="saleDetail?.type == 0" class="p-6 max-w-6xl mx-auto bg-gray-50 rounded-lg shadow-sm">
+  <div class="flex items-center mb-4">
+    <mat-icon class="text-amber-500 mr-2">home_work</mat-icon>
+    <h3 class="text-lg font-semibold text-gray-700">Asignación de Gallinero</h3>
+  </div>
+
+  <div class="space-y-4">
+    <div>
+      <label for="chickenCoopSelect" class="block text-sm font-medium text-gray-700 mb-1">
+        Seleccione un gallinero disponible
+      </label>
+      <div class="relative">
+        <select
+          id="chickenCoopSelect"
+          [(ngModel)]="selectedChickenCoopId"
+          class="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md transition duration-150 ease-in-out"
+        >
+          <option value="" disabled selected hidden>-- Seleccione un gallinero --</option>
+          <option *ngFor="let coop of chickenCoops" [value]="coop.idChickenCoop">
+            {{ coop.name }} 
+          </option>
+        </select>
+        <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+          <mat-icon class="text-gray-400">unfold_more</mat-icon>
+        </div>
+      </div>
+    </div>
+       <button
+      (click)="asignarChickenCoop()"
+      [disabled]="!selectedChickenCoopId"
+      class="w-full flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <mat-icon class="mr-2">check_circle</mat-icon>
+      Asignar Gallinero
+    </button>
+ 
+  </div>
+</div>
+
+ 
+<div class="p-6 max-w-6xl mx-auto bg-gray-50 rounded-lg shadow-sm" *ngIf="saleDetail">
+  <!-- Encabezado -->
+  <div class="flex justify-between items-start mb-6">
+    <div>
+      <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+        <mat-icon class="mr-2 text-blue-600">receipt</mat-icon>
+        Detalle de Venta 
+       
+      </h2>
+      <p class="text-gray-500 text-sm mt-1">{{ saleDetail.registrationDate | date:'fullDate' }}</p>
+    </div>
+    <span class="px-3 py-1 rounded-full text-sm font-medium"
+          [ngClass]="{
+            'bg-blue-100 text-blue-800': saleDetail.status === 0,
+            'bg-amber-100 text-amber-800': saleDetail.status === 1,
+            'bg-purple-100 text-purple-800': saleDetail.status === 2,
+            'bg-green-100 text-green-800': saleDetail.status === 3,
+            'bg-gray-100 text-gray-800': saleDetail.status === 4
+          }">
+      {{ obtenerNombreEstado(saleDetail.type) }}
+    </span>
+  </div>
+
+  <!-- Información principal en cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <!-- Card Cliente -->
+    <div class="bg-white p-5 rounded-lg shadow border border-gray-100">
+  <h3 class="font-semibold text-lg text-gray-700 mb-3 flex items-center">
+    <mat-icon class="mr-2 text-blue-500">person</mat-icon>
+    Información del Cliente
+  </h3>
+  <p class="text-gray-600 mb-1"><strong>Nombre:</strong> {{ saleDetail.clienteNombre }}</p>
+  <p class="text-gray-600 mb-1"><strong>Cantidad:</strong> {{ saleDetail.saleDetails[0]?.amount }}</p>
+</div>
+
+    <!-- Card Resumen -->
+    <div class="bg-white p-5 rounded-lg shadow border border-gray-100">
+      <h3 class="font-semibold text-lg text-gray-700 mb-3 flex items-center">
+        <mat-icon class="mr-2 text-green-500">attach_money</mat-icon>
+        Resumen de Venta
+      </h3>
+      <p class="text-gray-600 mb-1"><strong>Total:</strong> <span class="text-green-600 font-medium">{{ saleDetail.totalPrice | currency }}</span></p>
+    </div>
+  </div>
+
+  <!-- Sección de Asignación de Gallinero -->
+  <div *ngIf="saleDetail?.status == 0" class="bg-white p-5 rounded-lg shadow border border-gray-100 mb-8">
+    <h3 class="font-semibold text-lg text-gray-700 mb-4 flex items-center">
+      <mat-icon class="mr-2 text-amber-500">home_work</mat-icon>
+      Asignación de Gallinero
+    </h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="md:col-span-2">
+        <label for="chickenCoopSelect" class="block text-sm font-medium text-gray-700 mb-1">Seleccionar Gallinero</label>
+        <select
+          id="chickenCoopSelect"
+          [(ngModel)]="selectedChickenCoopId"
+          class="border border-gray-300 rounded-md px-3 py-2 w-full focus:ring-blue-500 focus:border-blue-500"
+        >
+          <option value="" disabled>-- Seleccione un gallinero --</option>
+          <option *ngFor="let coop of chickenCoops" [value]="coop.idChickenCoop">
+            {{ coop.name }} 
+          </option>
+        </select>
+      </div>
+      <div class="flex items-end">
+        <button
+          (click)="asignarChickenCoop()"
+          class="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
+          [disabled]="!selectedChickenCoopId"
+        >
+          <mat-icon class="mr-2">check_circle</mat-icon>
+          Asignar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detalles del Estimate -->
+  <div *ngIf="saleDetail?.estimate" class="bg-white p-5 rounded-lg shadow border border-gray-100 mb-8">
+  <h3 class="font-semibold text-lg text-gray-700 mb-4 flex items-center">
+    <mat-icon class="mr-2 text-purple-500">description</mat-icon>
+    Detalles del Proyecto
+  </h3>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <h4 class="font-medium text-gray-600 mb-2">Información Básica</h4>
+      <ul class="space-y-2">
+        <li class="flex justify-between">
+          <span class="text-gray-500">Ubicación:</span>
+          <span class="font-medium">{{ saleDetail.estimate?.chickenCoopLocation || 'N/A' }}</span>
+        </li>
+        <li class="flex justify-between">
+          <span class="text-gray-500">Cantidad de pollos:</span>
+          <span class="font-medium">{{ saleDetail.estimate?.quantityChickens || '0' }}</span>
+        </li>
+        <li class="flex justify-between">
+          <span class="text-gray-500">Precio total:</span>
+          <span class="font-medium text-green-600">{{ saleDetail.estimate?.priceTotal | currency }}</span>
+        </li>
+        <li class="flex justify-between">
+          <span class="text-gray-500">Tipo de conexión:</span>
+          <span class="font-medium">{{ saleDetail.estimate?.connectiontype || 'No especificado' }}</span>
+        </li>
+        <li class="flex justify-between">
+          <span class="text-gray-500">Instalación física:</span>
+          <span class="font-medium">{{ saleDetail.estimate?.physicalInstallation === 'si' ? 'Sí' : 'No' }}</span>
+        </li>
+      </ul>
+    </div>
+    
+    <div>
+      <h4 class="font-medium text-gray-600 mb-2">Características</h4>
+      <ul class="space-y-2">
+        <li class="flex items-center">
+          <mat-icon class="mr-2 text-sm" [ngClass]="{'text-green-500': saleDetail.estimate?.environmentalMonitoring === 'si', 'text-gray-400': saleDetail.estimate?.environmentalMonitoring !== 'si'}">
+            {{ saleDetail.estimate?.environmentalMonitoring === 'si' ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+          Monitoreo ambiental
+        </li>
+        <li class="flex items-center">
+          <mat-icon class="mr-2 text-sm" [ngClass]="{'text-green-500': saleDetail.estimate?.airqualitymonitoring === 'si', 'text-gray-400': saleDetail.estimate?.airqualitymonitoring !== 'si'}">
+            {{ saleDetail.estimate?.airqualitymonitoring === 'si' ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+          Calidad del aire
+        </li>
+        <li class="flex items-center">
+          <mat-icon class="mr-2 text-sm" [ngClass]="{'text-green-500': saleDetail.estimate?.naturallightingmonitoring === 'si', 'text-gray-400': saleDetail.estimate?.naturallightingmonitoring !== 'si'}">
+            {{ saleDetail.estimate?.naturallightingmonitoring === 'si' ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+          Luz natural
+        </li>
+        <li class="flex items-center">
+          <mat-icon class="mr-2 text-sm" [ngClass]="{'text-green-500': saleDetail.estimate?.automaticfeeddispenser === 'si', 'text-gray-400': saleDetail.estimate?.automaticfeeddispenser !== 'si'}">
+            {{ saleDetail.estimate?.automaticfeeddispenser === 'si' ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+          Dispensador automático
+        </li>
+        <li class="flex items-center">
+          <mat-icon class="mr-2 text-sm" [ngClass]="{'text-green-500': saleDetail.estimate?.waterlevelgauge === 'si', 'text-gray-400': saleDetail.estimate?.waterlevelgauge !== 'si'}">
+            {{ saleDetail.estimate?.waterlevelgauge === 'si' ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+          Medidor de agua
+        </li>
+        <li class="flex items-center">
+          <mat-icon class="mr-2 text-sm" [ngClass]="{'text-green-500': saleDetail.estimate?.nightMotionSensor === 'si', 'text-gray-400': saleDetail.estimate?.nightMotionSensor !== 'si'}">
+            {{ saleDetail.estimate?.nightMotionSensor === 'si' ? 'check_circle' : 'cancel' }}
+          </mat-icon>
+          Sensor de movimiento nocturno
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+  <!-- Acciones -->
+  <div class="bg-white p-5 rounded-lg shadow border border-gray-100">
+    <div class="flex justify-between items-center">
+      <div>
+        <h3 class="font-semibold text-lg text-gray-700 mb-1">Gestión del Estado</h3>
+        <p class="text-sm text-gray-500">Avance el estado del proceso según corresponda</p>
+      </div>
+      <button 
+        (click)="avanzarEstadoVenta()"
+        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors flex items-center"
+        *ngIf="saleDetail?.status !== 4 && saleDetail?.type !== 1"
+        [disabled]="saleDetail?.status === 0 && !selectedChickenCoopId"
+      >
+        <mat-icon class="mr-2">arrow_forward</mat-icon>
+        Avanzar estado
+      </button>
+    </div>
+    
+    <!-- Barra de progreso visual -->
+    <div class="mt-4">
+      <div class="flex justify-between text-xs text-gray-500 mb-1">
+        <span>Iniciado</span>
+        <span>En proceso</span>
+        <span>Instalación</span>
+        <span>Completado</span>
+      </div>
+      <div class="w-full bg-gray-200 rounded-full h-2.5">
+        <div class="bg-blue-600 h-2.5 rounded-full" 
+             [style.width]="(saleDetail.status / 4 * 100) + '%'"></div>
+      </div>
+    </div>
+  </div>
+</div>

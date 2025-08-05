@@ -1,0 +1,90 @@
+<div class="h-screen flex items-center justify-center bg-gray-50">
+  <form *ngIf="userDetailID" class="shadow-md rounded-md p-8 bg-white w-[90%] max-w-6xl">
+
+    <!-- Encabezado -->
+    <div class="mb-6">
+      <h1 class="font-bold text-2xl text-left">Editar Usuario</h1>
+      <p class="text-slate-600">Modifica los datos del usuario</p>
+    </div>
+
+    <!-- ID oculto -->
+    <input type="hidden" [value]="userDetailID.id" />
+
+    <!-- Campos de edición en 3 columnas -->
+    <div class="grid gap-6 grid-cols-1 md:grid-cols-3 w-full">
+
+      <!-- Email (solo lectura) -->
+      <mat-form-field appearance="fill" class="w-full md:col-span-3">
+        <mat-label>Email</mat-label>
+        <input matInput [value]="userDetailID.email" readonly>
+        <mat-icon matPrefix>email</mat-icon>
+      </mat-form-field>
+
+      <!-- Nombre -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="userDetailID.fullName" name="fullName">
+        <mat-icon matPrefix>person</mat-icon>
+      </mat-form-field>
+
+      <!-- Apellidos -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Apellidos</mat-label>
+        <input matInput [(ngModel)]="userDetailID.lastName" name="lastName">
+        <mat-icon matPrefix>person_outline</mat-icon>
+      </mat-form-field>
+
+      <!-- Teléfono -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Teléfono</mat-label>
+        <input matInput [(ngModel)]="userDetailID.phoneNumber" name="phoneNumber">
+        <mat-icon matPrefix>phone</mat-icon>
+      </mat-form-field>
+
+      <!-- Dirección -->
+      <mat-form-field appearance="fill" class="w-full md:col-span-3">
+        <mat-label>Dirección</mat-label>
+        <textarea matInput [(ngModel)]="userDetailID.address" name="address" rows="2"></textarea>
+        <mat-icon matPrefix>home</mat-icon>
+      </mat-form-field>
+
+      <!-- Ciudad -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Ciudad</mat-label>
+        <input matInput [(ngModel)]="userDetailID.city" name="city">
+        <mat-icon matPrefix>location_city</mat-icon>
+      </mat-form-field>
+
+      <!-- Estado -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Estado</mat-label>
+        <input matInput [(ngModel)]="userDetailID.state" name="state">
+        <mat-icon matPrefix>map</mat-icon>
+      </mat-form-field>
+
+      <!-- Roles (solo lectura) -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Roles</mat-label>
+        <input matInput [value]="userDetailID.roles.join(', ')" readonly>
+        <mat-icon matPrefix>groups</mat-icon>
+      </mat-form-field>
+
+    </div>
+
+    <!-- Botones -->
+    <div class="flex justify-between mt-8 md:col-span-3">
+      <button type="button" routerLink="/users/list"
+              class="text-white rounded-md py-2 px-6 bg-blue-600 hover:bg-blue-700 flex items-center">
+        <mat-icon class="mr-2">arrow_back</mat-icon>
+        Volver
+      </button>
+
+      <button type="button" (click)="saveChanges()"
+              class="text-white rounded-md py-2 px-6 bg-green-600 hover:bg-green-700 flex items-center">
+        <mat-icon class="mr-2">save</mat-icon>
+        Guardar Cambios
+      </button>
+    </div>
+
+  </form>
+</div>

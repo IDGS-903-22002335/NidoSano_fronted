@@ -1,0 +1,260 @@
+<div class="p-4 md:p-6 max-w-7xl mx-auto space-y-6">
+  <!-- Header y botón -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <h2 class="text-2xl font-bold text-gray-800">Historial de Compras</h2>
+    <button 
+      (click)="showModal = true" 
+      class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-all duration-200 w-full md:w-auto justify-center"
+    >
+      <span class="material-icons">add</span>
+      Agregar Compra
+    </button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Busqueda por texto -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Buscar proveedor o producto</mat-label>
+        <input matInput [(ngModel)]="searchText" placeholder="Ej: Tornillos o Acme Corp">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <!-- Busqueda por fecha -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Filtrar por fecha</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="searchDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <button *ngIf="searchDate" matSuffix mat-icon-button (click)="searchDate = ''" class="!flex items-center justify-center">
+          <mat-icon class="!text-base">close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <!-- Botón limpiar -->
+      <div class="flex items-end">
+        <button mat-stroked-button (click)="clearFilters()" class="w-full h-[56px]">
+          <div class="flex items-center justify-center gap-1">
+            <mat-icon>filter_alt_off</mat-icon>
+            <span>Limpiar</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="flex flex-col lg:flex-row gap-6">
+    <!-- Lista de compras -->
+    <div class="lg:w-2/3 space-y-4">
+      <h3 class="text-lg font-semibold text-gray-700">Compras recientes</h3>
+      
+      <div *ngIf="filteredBuys.length === 0" class="bg-white rounded-lg p-8 text-center border border-gray-200">
+        <mat-icon class="text-4xl text-gray-400 mb-2">inventory</mat-icon>
+        <p class="text-gray-500">No se encontraron compras</p>
+        <p class="text-sm text-gray-400 mt-1">Intenta ajustar los filtros de búsqueda</p>
+      </div>
+<!--Lista de tickes-->
+    <!-- Lista de tickes -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div *ngFor="let buy of filteredBuys" class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200 hover:shadow-md transition-shadow duration-200">
+    <div class="bg-green-50 px-4 py-3 border-b border-green-100">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <mat-icon class="text-green-600">receipt</mat-icon>
+          <h3 class="text-base font-medium text-gray-800">Compra </h3>
+        </div>
+        <span class="text-sm text-gray-500">{{ buy.dateBuys | date:'mediumDate' }}</span>
+      </div>
+    </div>
+    
+    <div class="p-4 space-y-3">
+      <div class="flex justify-between text-sm">
+        <span class="text-gray-500">Administrador:</span>
+        <span class="font-medium">{{ buy.adminFullName }}</span>
+      </div>
+      
+      <div class="flex justify-between text-sm">
+        <span class="text-gray-500">Total:</span>
+        <span class="font-bold text-green-600">${{ buy.total | number:'1.2-2' }}</span>
+      </div>
+      
+      <mat-divider></mat-divider>
+      
+      <div class="space-y-2">
+        <p class="text-xs font-medium text-gray-500">PRODUCTOS:</p>
+        <div class="relative">
+          <div class="max-h-[150px] overflow-y-auto pr-2 space-y-2">
+            <div *ngFor="let lot of buy.componentLots" class="bg-gray-50 p-2 rounded text-sm">
+              <div class="flex justify-between">
+                <span class="font-medium">{{ lot.componentName }}</span>
+                <span class="text-gray-600">{{ lot.amount }} und.</span>
+              </div>
+              <div class="text-xs text-gray-500 mt-1 flex justify-between">
+                <span>Prov: {{ lot.supplierName }}</span>
+                <span>${{ lot.unitPrice | number:'1.2-2' }} c/u</span>
+              </div>
+            </div>
+          </div>
+          <!-- Indicador de scroll -->
+          <div *ngIf="buy.componentLots.length > 3" class="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-white to-transparent flex items-end justify-center">
+            <mat-icon class="text-gray-400 !text-xl animate-bounce">keyboard_arrow_down</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+
+    <!-- Carrito -->
+    <div class="lg:w-1/3">
+      <div class="bg-white rounded-lg shadow-sm border border-green-100 sticky top-4">
+        <div class="bg-green-50 px-4 py-3 border-b border-green-200">
+          <div class="flex justify-between items-center">
+            <h3 class="text-base font-medium text-gray-800 flex items-center gap-2">
+              <mat-icon class="text-green-600">shopping_cart</mat-icon>
+              Carrito actual
+            </h3>
+            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">{{ componentLots.length }} items</span>
+          </div>
+        </div>
+        
+        <div class="p-4 space-y-4">
+          <div *ngIf="componentLots.length > 0" class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+            <div *ngFor="let item of componentLots; let i = index" class="bg-green-50 p-3 rounded-lg relative">
+              <button 
+                (click)="removeFromCart(i)"
+                class="absolute top-1 right-1 text-gray-400 hover:text-red-500 transition-colors"
+                mat-icon-button
+              >
+                <mat-icon class="!text-sm">close</mat-icon>
+              </button>
+              
+              <div class="flex justify-between text-sm">
+                <span class="font-medium text-green-800">
+                  {{ getComponentName(item.componentId) }}
+                </span>
+                <span class="text-green-600">{{ item.amount }} und.</span>
+              </div>
+              
+              <div class="text-xs text-green-600 mt-1 flex justify-between">
+                <span>Prov: {{ getSupplierName(item.supplierId) }}</span>
+                <span>${{ item.unitPrice | number:'1.2-2' }} c/u</span>
+              </div>
+              
+              <div class="text-xs font-medium mt-2 text-right text-green-700">
+                Total: ${{ (item.unitPrice * item.amount) | number:'1.2-2' }}
+              </div>
+            </div>
+          </div>
+          
+          <div *ngIf="componentLots.length === 0" class="text-center py-6 text-gray-400">
+            <mat-icon class="text-4xl mb-2">remove_shopping_cart</mat-icon>
+            <p>Carrito vacío</p>
+            <p class="text-xs mt-1">Agrega productos desde el formulario</p>
+          </div>
+          
+          <div *ngIf="componentLots.length > 0" class="border-t border-green-200 pt-4 space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-medium text-gray-700">Total compra:</span>
+              <span class="text-lg font-bold text-green-600">
+                ${{ getTotal() | number:'1.2-2' }}
+              </span>
+            </div>
+            
+            <button
+              (click)="registerBuy()"
+              class="w-full py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white transition-colors flex items-center justify-center gap-2"
+            >
+              <mat-icon class="!text-lg">shopping_cart_checkout</mat-icon>
+              <span>Finalizar compra</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<!-- Modal -->
+<div *ngIf="showModal" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30 p-4">
+  <div class="bg-white rounded-xl shadow-lg w-full max-w-md border border-gray-200 transform transition-all duration-300 ease-out">
+    <div class="bg-green-600 px-6 py-4 rounded-t-xl flex justify-between items-center">
+      <h2 class="text-lg font-semibold text-white flex items-center gap-2">
+        <mat-icon>add_shopping_cart</mat-icon>
+        Agregar productos
+      </h2>
+      <button 
+        (click)="showModal = false" 
+        class="text-white hover:text-green-200"
+        mat-icon-button
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <form (ngSubmit)="addToCart()" class="p-6 space-y-4">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Proveedor</mat-label>
+        <mat-icon matPrefix class="text-gray-500 mr-2">local_shipping</mat-icon>
+
+        <mat-select [(ngModel)]="selectedSupplierId" name="supplier" required>
+          <mat-option *ngFor="let supplier of suppliers" [value]="supplier.idSupplier">
+            <div class="flex items-center gap-2">
+              {{ supplier.name }}
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Componente</mat-label>
+      
+
+        <mat-select [(ngModel)]="selectedComponentId" name="component" required>
+          <mat-option *ngFor="let component of components" [value]="component.idComponent">
+            <div class="flex items-center gap-2">
+              {{ component.name }}
+            </div>
+          </mat-option>
+        </mat-select>
+          <mat-icon matPrefix class="text-gray-500 mr-2">category</mat-icon>
+      </mat-form-field>
+
+      <div class="grid grid-cols-2 gap-4">
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Precio unitario</mat-label>
+          <mat-icon matPrefix class="text-gray-500 mr-2">attach_money</mat-icon>
+          <input matInput type="number" [(ngModel)]="unitPrice" name="unitPrice" required min="0.01" step="0.01">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Cantidad</mat-label>
+          <mat-icon matPrefix class="text-gray-500 mr-2">format_list_numbered</mat-icon>
+          <input matInput type="number" [(ngModel)]="amount" name="amount" required min="1">
+        </mat-form-field>
+      </div>
+
+      <div class="flex justify-end gap-3 pt-2">
+        <button
+          type="button"
+          (click)="showModal = false"
+          class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors text-sm flex items-center gap-2"
+        >
+          <mat-icon class="!text-lg">cancel</mat-icon>
+          <span>Cancelar</span>
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white transition-colors text-sm flex items-center gap-2"
+        >
+          <mat-icon class="!text-lg">add_circle</mat-icon>
+          <span>Agregar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+<div class="max-w-2xl mx-auto p-6">
+  <!-- Mensaje de error - Estilo mejorado -->
+  <div *ngIf="mensajeError" class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r">
+    <div class="flex items-center">
+      <svg class="w-5 h-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+      </svg>
+      <p class="text-red-700 font-medium">{{ mensajeError }}</p>
+    </div>
+  </div>
+
+  <!-- Lista de preguntas - Diseño moderno -->
+  <div *ngIf="preguntasConRespuestas.length > 0; else noQuestions" class="space-y-6">
+    <div *ngFor="let pregunta of preguntasConRespuestas" class="bg-white rounded-xl shadow-md overflow-hidden">
+      <!-- Cabecera de la pregunta -->
+      <div class="p-5 bg-gray-50 border-b">
+        <div class="flex items-center">
+          <div class="bg-blue-100 rounded-full w-10 h-10 flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-500">{{ pregunta.clientFullName }}</p>
+
+            <p class="font-semibold text-gray-800">{{ pregunta.text }}</p>
+            <p class="text-xs text-gray-500 mt-1">
+              <span class="font-medium">Publicado:</span> {{ pregunta.date | date:'mediumDate' }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de respuestas - Estilo mejorado -->
+      <div *ngIf="pregunta.respuestas?.length > 0" class="divide-y divide-gray-100">
+        <div *ngFor="let resp of pregunta.respuestas" class="p-5">
+          <div class="flex">
+            <div class="bg-green-100 rounded-full w-10 h-10 flex items-center justify-center mr-3 flex-shrink-0">
+              <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-gray-700">{{ resp.text }}</p>
+              <p class="text-xs text-gray-500 mt-2">
+                <span class="font-medium">Respondido:</span> {{ resp.date | date:'mediumDate' }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensaje cuando no hay respuestas -->
+      <div *ngIf="!pregunta.respuestas || pregunta.respuestas.length === 0" class="p-5 text-center">
+        <p class="text-gray-500 italic">Aún no hay respuestas a esta pregunta</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje cuando no hay preguntas -->
+  <ng-template #noQuestions>
+    <div class="bg-white rounded-xl shadow-md p-8 text-center">
+      <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <h3 class="mt-4 text-lg font-medium text-gray-900">No hay preguntas aún</h3>
+      <p class="mt-1 text-gray-500">Sé el primero en hacer una pregunta sobre este producto</p>
+    </div>
+  </ng-template>
+
+  <!-- Formulario para nueva pregunta - Diseño mejorado -->
+  <div class="mt-8 bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="p-5 border-b">
+      <h3 class="text-lg font-semibold text-gray-800">Haz una pregunta</h3>
+      <p class="text-sm text-gray-500 mt-1">Tu pregunta será respondida por el vendedor u otros compradores</p>
+    </div>
+    
+    <div class="p-5">
+      <textarea 
+        [(ngModel)]="messageText"
+        placeholder="Escribe tu pregunta aquí..."
+        rows="4"
+        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+      ></textarea>
+      
+      <button 
+        (click)="sendMessage()"
+        class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center"
+      >
+        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
+        </svg>
+        Enviar pregunta
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="max-w-6xl mx-auto mt-16">
+
+    <!-- Cards de resumen -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    
+    <!-- Cotizaciones -->
+     <a [routerLink]="[`/costeo`]">
+    <div class="bg-green-100 rounded-xl p-5 shadow-md flex items-center space-x-4">
+      <div class="bg-green-600 text-white p-3 rounded-full">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+             viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 8v4l3 3"></path>
+          <circle cx="12" cy="12" r="10"></circle>
+        </svg>
+      </div>
+      <div>
+        <p class="text-xl font-bold text-black-700">Costeo</p>
+        <p class="text-xl font-bold text-green-700"></p>
+      </div>
+    </div>
+</a>
+    <!-- Ventas -->
+     <a [routerLink]="[`/venta`]">
+    <div class="bg-green-100 rounded-xl p-5 shadow-md flex items-center space-x-4">
+      <div class="bg-green-600 text-white p-3 rounded-full">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+             viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"></path>
+        </svg>
+      </div>
+      <div>
+        <p class="text-xl font-bold text-black-700">Ventas</p>
+        <p class="text-xl font-bold text-green-700"></p>
+      </div>
+    </div>
+</a>
+    <!-- Calificación -->
+<a [routerLink]="[`/message`]">
+  <div class="bg-green-100 rounded-xl p-5 shadow-md flex items-center space-x-4 cursor-pointer hover:bg-green-200">
+    <div class="bg-green-600 text-white p-3 rounded-full">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+           viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+      </svg>
+    </div>
+    <div>
+      <p class="text-xl font-bold text-black-700">Comentarios</p>
+    </div>
+  </div>
+</a>
+
+
+    <!-- Nuevo usuario -->
+<a [routerLink]="[ '/registro']">
+    <div class="bg-green-100 rounded-xl p-5 shadow-md flex items-center space-x-4">
+      <div class="bg-green-600 text-white p-3 rounded-full">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+             viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 00-3-3.87"></path>
+          <path d="M4 21v-2a4 4 0 013-3.87"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <div>
+        <p class="text-xl font-bold text-black-700">Nuevo usuario</p>
+        <p class="text-xl font-bold text-green-700"></p>
+      </div>
+    </div>
+</a>
+  </div>
+</div>
+<div class="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
+  
+
+  <h2 class="text-3xl font-bold text-green-700 mb-8 text-center tracking-tight">Productos más vendidos</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div>
+      <label for="startDate" class="block text-sm font-semibold text-gray-600 mb-2">Fecha de inicio</label>
+      <input type="date" [(ngModel)]="startDate" id="startDate"
+        class="w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+    <div>
+      <label for="endDate" class="block text-sm font-semibold text-gray-600 mb-2">Fecha de fin</label>
+      <input type="date" [(ngModel)]="endDate" id="endDate"
+        class="w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+  </div>
+
+  <div class="flex justify-center mb-10">
+    <button 
+      (click)="consultar()" 
+      class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-8 rounded-full shadow-lg transition-colors duration-300">
+      Consultar
+    </button>
+  </div>
+
+  <div class="w-full overflow-x-auto">
+    <canvas baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType"
+      height="100">
+    </canvas>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+<div class="p-6 max-w-7xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-800">Ventas Registradas</h2>
+    
+  </div>
+
+  <!-- Filtros -->
+  <div class="bg-white p-4 rounded-lg shadow mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="searchName" class="block text-sm font-medium text-gray-700 mb-1">Buscar por cliente</label>
+        <input
+          type="text"
+          id="searchName"
+          [(ngModel)]="searchName"
+          (input)="onSearchChange()"
+          placeholder="Nombre del cliente"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        >
+      </div>
+      <div>
+        <label for="searchDate" class="block text-sm font-medium text-gray-700 mb-1">Buscar por fecha</label>
+        <input
+          type="date"
+          id="searchDate"
+          [(ngModel)]="searchDate"
+          (change)="filterSales()"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estatus</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Detalles</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let sale of filteredSales" class="hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ sale.idSale }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ sale.registrationDate | date: 'mediumDate' }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">{{ sale.clienteNombre }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span [ngClass]="{
+                'bg-green-100 text-green-800': sale.type === 1,
+                'bg-yellow-100 text-yellow-800': sale.type === 0,
+                'bg-red-100 text-red-800': sale.type === 2,
+                'bg-blue-100 text-blue-800': sale.type === 3,
+                'bg-purple-100 text-purple-800': sale.type === 4
+              }" class="px-2 py-1 text-xs font-semibold rounded-full">
+                {{ getStatusText(sale.type) }}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ sale.totalPrice | currency }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ getTotalAmount(sale) }} producto(s)</td>
+            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+              <button
+                class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                [routerLink]="['/venta_detalle', sale.idSale]"
+              >
+                Detalle Venta
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="filteredSales.length === 0">
+            <td colspan="7" class="px-6 py-4 text-center text-sm text-gray-500">
+              No se encontraron ventas que coincidan con los criterios de búsqueda
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
