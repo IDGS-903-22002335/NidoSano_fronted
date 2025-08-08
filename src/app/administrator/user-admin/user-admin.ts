@@ -59,7 +59,6 @@ filteredUsers$ = combineLatest([
     next: (res) => {
       this.snackBar.open(res.message, 'Cerrar', { duration: 3000 });
 
-      // Vuelve a asignar user$ y filteredUsers$ con los nuevos datos
       const updated$ = this.authService.getAll().pipe(
         map(users =>
           users

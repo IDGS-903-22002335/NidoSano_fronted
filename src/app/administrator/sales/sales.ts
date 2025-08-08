@@ -33,7 +33,6 @@ export class Sales implements OnInit {
       }
     });
 
-    // Configuración del debounce para búsqueda en tiempo real
     this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged()

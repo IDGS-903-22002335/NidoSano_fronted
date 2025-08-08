@@ -46,7 +46,7 @@ snackBar = inject(MatSnackBar);
         duration: 3000,
         verticalPosition: 'top',
         horizontalPosition: 'center',
-        panelClass: ['bg-green-600', 'text-white'] // opcional: usa clases Tailwind si estás usando Tailwind
+        panelClass: ['bg-green-600', 'text-white'] 
       });
     },
     error: (err) => console.error('Error al actualizar:', err)

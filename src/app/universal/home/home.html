@@ -1,29 +1,33 @@
-<div class="flex items-center flex-col pt-56 h-screen">
-    <div class="h-screen">
-        <h1 class="text-4xl text-center font-bold my-10">Bienvenido a
-            <span class="text-5xl text-green-800">Modulap</span>
+<div class="flex items-center flex-col pt-56 h-screen bg-gray-50">
+    <div class="h-screen max-w-4xl mx-auto px-4">
+        <h1 class="text-5xl md:text-6xl text-center font-extrabold my-10 text-gray-800">
+            Bienvenido a
+            <span class="text-6xl md:text-7xl text-green-700 font-black tracking-tight bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
+                Modulap
+            </span>
         </h1>
 
-        <div class="flex flex-col items-center gap-5 justify-center">
+        <div class="flex flex-col items-center gap-8 justify-center mt-16">
             @if (authService.getUserDetail()) {
-                <h1 class="text-2xl">
-                    Estás conectado como
-
-                    <span class="font-bold bg-green rounded-md p-2 bg-green-600 text-withe">
-                          {{authService.getUserDetail()?.fullName}}
+                <div class="text-center">
+                    <p class="text-xl text-gray-600 mb-3 font-medium">Estás conectado como</p>
+                    <span class="text-3xl font-bold text-white bg-gradient-to-r from-green-600 to-green-700 rounded-lg px-6 py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 inline-block">
+                        {{authService.getUserDetail()?.fullName}}
                     </span>
-                </h1>
-            }@else {
-                <h1 class="text-2xl">No has iniciado secion</h1>
-                 <a routerLink="/login">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
-                      Login
-                    </button>
-                
-                </a>
+                </div>
+            } @else {
+                <div class="text-center space-y-6">
+                    <h2 class="text-2xl font-semibold text-gray-700">Inicia sesión para comenzar</h2>
+                    <a routerLink="/login">
+                        <button class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                            Iniciar sesión
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </a>
+                </div>
             }
-            
         </div>
     </div>
-
 </div>

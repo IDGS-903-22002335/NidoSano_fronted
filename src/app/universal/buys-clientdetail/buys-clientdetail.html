@@ -23,7 +23,6 @@
 
 <div *ngIf="!loading && products.length > 0" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
   <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition-all hover:shadow-md">
-    <!-- Product Header with Gradient -->
     <div class="bg-gradient-to-r from-emerald-500 to-emerald-600 p-6 text-white relative overflow-hidden">
       <div class="absolute inset-0 opacity-10">
         <div class="absolute top-0 right-0 w-32 h-32 -mt-8 -mr-8 bg-white rounded-full"></div>
@@ -47,14 +46,11 @@
       </div>
     </div>
 
-    <!-- Main Content -->
     <div class="p-6 space-y-6">
-  <!-- Dentro de tu sección de Key Metrics Grid, donde tienes el botón actual -->
 
 
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-  <!-- Grupo 1: Cantidad y Precio Unitario -->
   <div class="grid grid-cols-2 gap-4">
     <!-- Cantidad -->
     <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs hover:shadow-sm transition-all">
@@ -87,7 +83,6 @@
     </div>
   </div>
 
-  <!-- Grupo 2: Total y Botón Cancelar -->
   <div class="grid grid-cols-2 gap-4">
     <!-- Total Pagado -->
     <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs hover:shadow-sm transition-all">
@@ -124,7 +119,6 @@
 </div>
       </div>
 
-      <!-- Dynamic Order Status -->
       <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm transition-all hover:shadow-md">
         <h3 class="font-semibold text-lg text-gray-900 mb-4 flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -178,7 +172,6 @@
         </div>
       </div>
 
-      <!-- Product Description -->
       <div *ngIf="products[0].chickenCoop?.description" class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
         <h3 class="font-semibold text-lg text-gray-900 mb-2">Descripción del producto</h3>
         <p class="text-gray-600">
@@ -186,7 +179,6 @@
         </p>
       </div>
 
-      <!-- Recipes Section -->
       <div *ngIf="products[0].chickenCoop?.recipes?.length > 0" class="border-t border-gray-200 pt-6">
         <h2 class="text-xl font-bold text-gray-800 flex items-center mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -239,9 +231,7 @@
         </div>
       </div>
 
-      <!-- Support Section -->
-      
-    <!-- Footer with Back Button -->
+
 
   </div>
 </div>

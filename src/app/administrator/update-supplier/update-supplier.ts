@@ -47,7 +47,7 @@ export class UpdateSupplier implements OnInit {
         error: (err) => {
           console.error('Error cargando proveedor', err);
           this.snackBar.open('Error al cargar datos del proveedor', 'Cerrar', { duration: 3000 });
-          this.router.navigate(['/proveedores']); // Regresa si hay error
+          this.router.navigate(['/proveedores']); 
         }
       });
     }
@@ -61,8 +61,8 @@ export class UpdateSupplier implements OnInit {
         phoneNumber: this.supplierForm.value.phoneNumber,
         email: this.supplierForm.value.email,
         address: this.supplierForm.value.address,
-        registrationDate: '', // Puedes dejar vacío o no enviar si no lo actualizas
-        status: 1 // o el estado actual que manejes
+        registrationDate: '', 
+        status: 1 
       };
 
       this.adminService.UpdateSupplier(updatedSupplier).subscribe({

@@ -79,7 +79,7 @@ export class Registro implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required]],
         fullName: ['', Validators.required],
-        lastName: ['', Validators.required],  // <-- Aquí debe estar lastName
+        lastName: ['', Validators.required],  
         address: [''],
         city: [''],
         state: [''],

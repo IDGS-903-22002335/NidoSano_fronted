@@ -137,7 +137,7 @@ closeLossModal() {
 submitLoss() {
   if (this.lossForm.valid) {
     const lossData: Loss = {
-      idComponentLot: this.lossForm.value.componentLotId, // 👈 ahora desde el select
+      idComponentLot: this.lossForm.value.componentLotId, 
       amount: this.lossForm.value.amount,
       type: this.lossForm.value.type
     };
@@ -147,7 +147,7 @@ submitLoss() {
         this.snackBar.open('Pérdida registrada correctamente', 'Cerrar', { duration: 3000 });
         this.closeLossModal();
         this.loadComponents();
-        this.loadComponentLots(); // recarga los lotes
+        this.loadComponentLots(); 
       },
       error: () => {
         this.snackBar.open('Error al registrar la pérdida', 'Cerrar', { duration: 3000 });

@@ -1,10 +1,19 @@
 <div>
     <mat-toolbar style="padding:10px 50px;">
        
-       <!-- Modifica este enlace -->
-<a routerLink="{{ isLoggedIn() ? '/home' : '/' }}">
-<img src="assets/images/lgo.jpg" alt="Logo" style="height: 40px;" />
-</a>
+<div class="mt-3 -ml-1">
+  <a 
+    routerLink="{{ isLoggedIn() ? '/home' : '/' }}" 
+    matTooltip="Inicio"
+    class="inline-flex items-center gap-1 ml-0 pl-0">
+    <img 
+      src="/images/lgo.jpg" 
+      alt="Logo" 
+      class="w-12 h-auto rounded hover:opacity-90 -ml-1"
+    >
+    <p class="text-sm font-medium text-gray-800">Modulap</p> 
+  </a>
+</div>
        <div class="w-full"></div>
 
        @if(isLoggedIn()){

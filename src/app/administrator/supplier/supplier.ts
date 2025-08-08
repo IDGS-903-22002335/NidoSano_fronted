@@ -41,7 +41,7 @@ loadSuppliers(): void {
     this.adminService.getSupplier().subscribe({
       next: (res) => {
         this.suppliers = res;
-        this.filteredSuppliers = res; // inicializar con todos
+        this.filteredSuppliers = res;
       },
       error: (err) => console.error('Error al obtener proveedores', err)
     });

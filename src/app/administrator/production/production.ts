@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChickenCoopWithRecipesDto } from '../../interfaces/ChickenCoopWithRecipesDto';
 import { Admin } from '../../services/admin';
-import { ProductionLotCreateDto } from '../../interfaces/ProductionLotCreateDto'; // Asegúrate de importar correctamente
-import { ProductionDto } from '../../interfaces/ProductionDto'; // Ajusta la ruta si es necesario
+import { ProductionLotCreateDto } from '../../interfaces/ProductionLotCreateDto'; 
+import { ProductionDto } from '../../interfaces/ProductionDto'; 
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
@@ -36,7 +36,7 @@ productions: ProductionDto[] = [];
 
   this.adminService.getProduction().subscribe({
     next: (res) => {
-      this.productions = Array.isArray(res) ? res : [res]; // por si tu backend devuelve solo un objeto
+      this.productions = Array.isArray(res) ? res : [res]; 
     },
     error: (err) => {
       console.error('Error al cargar la producción:', err);

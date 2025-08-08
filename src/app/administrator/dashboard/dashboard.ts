@@ -74,7 +74,7 @@ ngOnInit(): void {
   this.startDate = startOfYear.toISOString().split('T')[0];
   this.endDate = today.toISOString().split('T')[0];
 
-  this.consultar(); // Ejecutar de inmediato
+  this.consultar();
 }
 
 

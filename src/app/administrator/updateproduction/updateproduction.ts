@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Updateproduction implements OnInit {
   requestedProducts: any[] = [];
-  errorMessage: string = ''; // mensaje de error
+  errorMessage: string = ''; 
 
   constructor(private adminService: Admin) {}
 
@@ -22,7 +22,7 @@ export class Updateproduction implements OnInit {
     this.adminService.getAllProductRequested().subscribe({
       next: (res) => {
         this.requestedProducts = res;
-        this.errorMessage = ''; // limpia el error si hay datos nuevos
+        this.errorMessage = ''; 
         console.log('Productos solicitados:', this.requestedProducts);
       },
       error: (err) => {
@@ -36,7 +36,7 @@ export class Updateproduction implements OnInit {
     this.adminService.changeProductionStatus(lotId, newStatus).subscribe({
       next: () => {
         console.log(`Lote ${lotId} actualizado a ${newStatus}`);
-        this.errorMessage = ''; // limpia el mensaje si todo sale bien
+        this.errorMessage = '';
         this.loadRequestedProducts();
       },
       error: (err) => {

@@ -1,32 +1,70 @@
-<div class="h-screen flex items-center justify-center">
-  <form class="shadow-md rounded-md bg-white w-1/6" [formGroup]="form" (ngSubmit)="login()">
-    <div class="py-4">
-      <h1 class="font-bold py-2">Login</h1>
-      <h6 class="text-slate-600 text-base">Inicia sesión en tu cuenta</h6>
+<div class="h-screen flex items-center justify-center bg-gray-50">
+  <div class="flex shadow-2xl rounded-xl overflow-hidden w-4/5 max-w-6xl">
+    <!-- Sección de la imagen -->
+    <div class="hidden md:block w-1/2 bg-gradient-to-br from-purple-600 to-blue-500">
+      <img 
+        src="/images/image.png" 
+        alt="Imagen de login" 
+        class="w-full h-full object-cover"
+      />
     </div>
-
-    <mat-form-field appearance="fill" class="w-full">
-      <mat-label>Email</mat-label>
-      <input matInput placeholder="Email"  formControlName="email"/>
-      <mat-icon matPrefix>email</mat-icon>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill" class="w-full">
-      <mat-label>Password</mat-label>
-      <input matInput  type = "{{hide ? 'password': 'text'}}" 
-      formControlName = "password"
-      placeholder="Password" />
-      <mat-icon matPrefix>lock</mat-icon>
-      <mat-icon (click)="hide = !hide" matSuffix>{{hide ? 'visibility_off': 'visibility'}}</mat-icon>
-    </mat-form-field>
-
-
-   <button type="submit" [disabled]="!form.valid"
-      class="w-full mt-4 border border-slate-200 rounded-md disabled:bg-purple-400 py-2 px-3 bg-purple-700 text-white font-bold"
-    >
-      Login
-    </button>
-
     
-  </form>
+    <!-- Formulario -->
+    <form 
+      class="w-full md:w-1/2 p-8 bg-white flex flex-col justify-center" 
+      [formGroup]="form" 
+      (ngSubmit)="login()"
+    >
+      <div class="mb-8 text-center md:text-left">
+        <div class="flex justify-center md:justify-start mb-4">
+          <img 
+            src="/images/LogoCompleto.jpg" 
+            alt="Logo" 
+            class="h-40 object-contain"  
+          />
+        </div>
+        <h1 class="text-3xl font-bold text-gray-800">Bienvenido de nuevo</h1>
+        <p class="text-gray-600 mt-2">Inicia sesión para acceder a tu cuenta</p>
+      </div>
+
+      <mat-form-field appearance="fill" class="w-full mb-4">
+        <mat-label>Correo electrónico</mat-label>
+        <input 
+          matInput 
+          placeholder="tu@email.com"  
+          formControlName="email"
+          type="email"
+        />
+        <mat-icon matPrefix>email</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full mb-6">
+        <mat-label>Contraseña</mat-label>
+        <input 
+          matInput  
+          type="{{hide ? 'password': 'text'}}" 
+          formControlName="password"
+          placeholder="••••••••" 
+        />
+        <mat-icon matPrefix>lock</mat-icon>
+        <button 
+          type="button" 
+          mat-icon-button 
+          matSuffix 
+          (click)="hide = !hide"
+          aria-label="Toggle password visibility"
+        >
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <button 
+        type="submit" 
+        [disabled]="!form.valid"
+        class="w-full mt-2 rounded-lg py-3 px-4 bg-gradient-to-r from-green-600 to-green-500 text-white font-bold hover:from-green-700 hover:to-green-600 transition-all duration-300 shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
+      >
+        Iniciar sesión
+      </button>
+    </form>
+  </div>
 </div>
