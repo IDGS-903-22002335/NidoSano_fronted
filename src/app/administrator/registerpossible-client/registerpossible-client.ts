@@ -98,33 +98,49 @@ roleService = inject(Role);
     });
   }
 
-  // Resto de los métodos permanecen igual...
   register() {
-    if (this.registerForm.invalid) return;
+  if (this.registerForm.invalid) return;
 
-    const registrationData = {
-      ...this.registerForm.value,
-      roles: this.registerForm.get('roles')?.value || '',
-    };
+  const registrationData = {
+    ...this.registerForm.value,
+    roles: this.registerForm.get('roles')?.value || '',
+  };
 
-    this.authService.register(registrationData).subscribe({
-      next: (response) => {
-        this.matSnackbar.open(response.message, 'Cerrar', {
+  this.authService.register(registrationData).subscribe({
+    next: (response: any) => {
+      this.matSnackbar.open(response.message, 'Cerrar', {
+        duration: 5000,
+        horizontalPosition: 'center',
+      });
+
+      const clienteId = response.idPossibleClient || response.id || this.clienteId;
+
+      if (clienteId) {
+        this.adminService.setStatusToOne(clienteId).subscribe({
+          next: () => {
+            console.log('Status actualizado a 1 para el cliente:', clienteId);
+            this.router.navigate(['/posible_cliente']); 
+          },
+          error: (err) => {
+            console.error('Error actualizando status:', err);
+          }
+        });
+      } else {
+        this.router.navigate(['/possible-clients']);
+      }
+    },
+    error: (err: HttpErrorResponse) => {
+      if (err.status === 400) {
+        this.errors = err.error;
+        this.matSnackbar.open('Error de validación', 'Cerrar', {
           duration: 5000,
           horizontalPosition: 'center',
         });
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.status === 400) {
-          this.errors = err.error;
-          this.matSnackbar.open('Error de validación', 'Cerrar', {
-            duration: 5000,
-            horizontalPosition: 'center',
-          });
-        }
       }
-    });
-  }
+    }
+  });
+}
+
 
   private passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const password = control.get('password')?.value;

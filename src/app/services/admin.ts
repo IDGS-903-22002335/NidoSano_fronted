@@ -186,4 +186,8 @@ getPossibleClientById(id: string): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}PossibleClient/getPossibleClientById/${id}`);
 }
 
+setStatusToOne(id: string): Observable<any> {
+  return this.http.put(`${this.apiUrl}PossibleClient/setStatusToOne/${id}`, {});
+}
+
 }
