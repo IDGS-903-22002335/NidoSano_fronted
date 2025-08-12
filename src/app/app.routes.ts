@@ -39,31 +39,35 @@ import { Questions } from './universal/questions/questions';
 import { Footer } from './universal/footer/footer';
 import { PossibleClient } from './administrator/possible-client/possible-client';
 import { RegisterpossibleClient } from './administrator/registerpossible-client/registerpossible-client';
+import { AboutUs } from './universal/about-us/about-us';
+import { Nidosano } from './universal/nidosano/nidosano';
+import { Guide } from './universal/guide/guide';
+import { Manual } from './universal/manual/manual';
 
 
 export const routes: Routes = [
 
-      {
-      path: '',
-      component: View,
-    },
-    {
-      path: 'home',
-      component: Home,
-      canActivate: [authGuard],
-      data: {
+  {
+    path: '',
+    component: View,
+  },
+  {
+    path: 'home',
+    component: Home,
+    canActivate: [authGuard],
+    data: {
       roles: ['Cliente '],   // solo permite que un Administrador entre
     },
-    },
-    {
-        path: 'login',
-        component: Login
-    },
-    
-      {
+  },
+  {
+    path: 'login',
+    component: Login
+  },
+
+  {
     path: 'registro',
     component: Registro,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
@@ -71,157 +75,157 @@ export const routes: Routes = [
   {
     path: 'registro_cliente',
     component: RegisterClient,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-     
+
   },
-   {
+  {
     path: 'registro_posiblecliente/:id',
     component: RegisterpossibleClient,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-     
+
   },
-    {
+  {
     path: 'proveedores',
     component: Supplier,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-     
+
   },
 
-    {
+  {
     path: 'registro_proveedor',
     component: RegisterSupplier,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-     
+
   },
-    {
+  {
     path: 'costeo',
     component: Costing,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-     
+
   },
-      {
+  {
     path: 'productos',
     component: AdminProducts,
-    
-    
-     
+
+
+
   },
-   {
+  {
     path: 'estatusproductos',
     component: Updateproduction,
-    
-    
-     
+
+
+
   },
-     {
+  {
     path: 'producción',
     component: Production,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-     
+
   },
-   {
+  {
     path: 'venta',
     component: Sales,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-     
+
   },
-     {
-    path:'venta_detalle/:id',
+  {
+    path: 'venta_detalle/:id',
     component: SalesDetails,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-     
+
   },
-      {
+  {
     path: 'actualizacion_proveedor/:idSupplier',
     component: UpdateSupplier,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-     
+
   },
-        {
+  {
     path: 'compra',
     component: Buys,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-     
+
   },
-   {
+  {
     path: 'Inventario_Materia_Prima',
     component: RawMaterial,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-     
+
   },
   {
     path: 'registro_administrador',
     component: RegisterAdministrator,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
   },
-    {
+  {
     path: 'ractualizar_cliente/:id',
-    
+
     component: UpdateClient,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
   },
-   {
+  {
     path: 'ractualizar_admin/:id',
-    
+
     component: UpdateAdmin,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
   },
   {
     path: 'message',
-    
+
     component: Message,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
   },
   {
     path: 'message_detail/:id',
-    
+
     component: MessageDetail,
-     canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
@@ -230,7 +234,7 @@ export const routes: Routes = [
     path: 'change-password',
     component: ChangePassword,
     canActivate: [authGuard],
-  },{
+  }, {
     path: 'account/:id',
     component: Account,
     canActivate: [authGuard],
@@ -238,17 +242,17 @@ export const routes: Routes = [
   {
     path: 'forgot-password',
     component: ForgotPassword,
-    
+
   },
   {
     path: 'reset-password',
     component: ResetPassword,
-    
+
   },
   {
     path: 'users',
     component: Users,
-      canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
@@ -256,7 +260,7 @@ export const routes: Routes = [
   {
     path: 'users_Admin',
     component: UserAdmin,
-      canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
@@ -264,72 +268,96 @@ export const routes: Routes = [
   {
     path: 'roles',
     component: RoleComponent,
-      canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-    
+
   },
-   {
+  {
     path: 'dashboard',
     component: Dashboard,
-      canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un Administrador entre
     },
-    
+
   },
 
-     {
+  {
     path: 'compra_cliente',
     component: BuysClient,
-      canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Cliente'],   // solo permite que un cliente entre
     },
-    
+
   },
-       {
+  {
     path: 'compra_cliente_detalle/:saleId',
     component: BuysClientdetail,
-      canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Cliente'],   // solo permite que un cliente entre
     },
-    
+
   },
   {
     path: 'estimateCliente',
     component: Estimate,
-      canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Cliente'],   // solo permite que un cliente entre
     },
-    
+
+  },
+  {
+    path: 'guide',
+    component: Guide,
+    canActivate: [roleGuard],
+    data:{
+      roles: ['Cliente'],
+    }
+  },
+  {
+    path: 'manual',
+    component: Manual,
+    canActivate: [roleGuard],
+    data: {
+      roles: ['Cliente'],
+    }
   },
   {
     path: 'posible_cliente',
     component: PossibleClient,
-      canActivate: [roleGuard],
+    canActivate: [roleGuard],
     data: {
       roles: ['Admin'],   // solo permite que un cliente entre
     },
-    
+
   },
 
-   {
+  {
     path: 'estimate',
     component: ViewEstimate,
-     
-    
+
+
   },
-        {
-      path: 'Product_view',
-      component: ProductView,
-    },
-       {
-      path: 'Preguntas_respuestas',
-      component: Questions,
-    },
- 
+  {
+    path: 'Product_view',
+    component: ProductView,
+  },
+  {
+    path: 'Preguntas_respuestas',
+    component: Questions,
+  },
+  {
+    path: 'about_us',
+    component: AboutUs
+  },
+  {
+    path: 'nidosano',
+    component: Nidosano
+  }
+
 ];

@@ -1,4 +1,4 @@
-<div class="max-w-4xl mx-auto px-4 py-6">
+<div class="max-w-7xl mx-auto px-4 py-6">
   <!-- Mensaje de error -->
   <div *ngIf="mensajeError" class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r">
     <div class="flex items-center">
@@ -7,18 +7,15 @@
     </div>
   </div>
 
-  <!-- Ficha del producto -->
   <div *ngIf="idChickenCoop" class="bg-white rounded-lg shadow-sm p-6 mb-8 border border-gray-100">
     <div class="md:flex gap-6">
-      <!-- Imagen del producto (simulada) -->
-      <div class="md:w-1/3 mb-4 md:mb-0 bg-gray-100 rounded-lg flex items-center justify-center h-64">
-        <mat-icon class="text-gray-400 text-6xl">image</mat-icon>
+      <div class="md:w-1/3 mb-4 md:mb-0 bg-gray-100 rounded-lg flex items-center justify-center h-64 overflow-hidden">
+        <img src="/images/gan.jpg" alt="" class="w-full h-full object-cover">
       </div>
-      
-      <!-- Detalles del producto -->
+
       <div class="md:w-2/3">
         <h1 class="text-2xl font-bold text-gray-800 mb-2">{{ name }}</h1>
-        
+
         <div class="flex items-center mb-4">
           <div class="flex mr-3">
             <ng-container *ngFor="let star of [1,2,3,4,5]">
@@ -32,23 +29,19 @@
             {{ resumenCalificaciones?.totalCalificaciones || '0' }} reseñas
           </span>
         </div>
-        
+
         <p class="text-green-600 font-bold text-3xl mb-4">${{ price | number }}</p>
-        
+
         <p class="text-gray-700 mb-4">{{ description }}</p>
-        
+
         <div class="grid grid-cols-2 gap-4 mb-4">
-          <div>
-            <p class="text-gray-600 text-sm">ID del producto</p>
-            <p class="font-medium">{{ idChickenCoop }}</p>
-          </div>
           <div>
             <p class="text-gray-600 text-sm">Disponibilidad</p>
             <p class="font-medium text-green-600">En stock</p>
           </div>
         </div>
-        
-       
+
+
       </div>
     </div>
   </div>
@@ -60,7 +53,7 @@
   <!-- Resumen de calificaciones -->
   <div *ngIf="resumenCalificaciones" class="bg-white rounded-lg shadow-sm p-6 mb-8 border border-gray-100">
     <h2 class="text-xl font-bold text-gray-800 mb-4">Reseñas de clientes</h2>
-    
+
     <div class="md:flex items-start justify-between">
       <div class="md:w-1/3 mb-6 md:mb-0">
         <div class="flex items-center mb-2">
@@ -77,24 +70,25 @@
               </ng-container>
             </div>
             <span class="text-gray-500 text-sm">
-              {{ resumenCalificaciones.totalCalificaciones }} calificación{{ resumenCalificaciones.totalCalificaciones !== 1 ? 'es' : '' }}
+              {{ resumenCalificaciones.totalCalificaciones }} calificación{{ resumenCalificaciones.totalCalificaciones
+              !== 1 ? 'es' : '' }}
             </span>
           </div>
         </div>
-       <!--<button (click)="scrollToReviewForm()" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+        <!--<button (click)="scrollToReviewForm()" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
           Escribe una reseña
         </button>
-        --> 
+        -->
       </div>
-      
+
       <!-- Gráfico de barras -->
       <div class="md:w-2/3">
         <div class="space-y-3">
           <div *ngFor="let item of resumenCalificaciones.detallePorPuntuacion" class="flex items-center">
             <span class="w-8 text-gray-600 text-sm">{{ item.puntuacion }}★</span>
             <div class="flex-1 mx-2 h-3 bg-gray-100 rounded-full overflow-hidden">
-              <div class="h-full bg-yellow-400 rounded-full" 
-                   [ngStyle]="{ width: (item.conteo / resumenCalificaciones.totalCalificaciones * 100) + '%' }">
+              <div class="h-full bg-yellow-400 rounded-full"
+                [ngStyle]="{ width: (item.conteo / resumenCalificaciones.totalCalificaciones * 100) + '%' }">
               </div>
             </div>
             <span class="w-10 text-right text-sm text-gray-500">{{ item.conteo }}</span>
@@ -107,16 +101,16 @@
   <!-- Preguntas y respuestas -->
   <div class="bg-white rounded-lg shadow-sm p-6 mb-8 border border-gray-100">
     <div class="flex justify-between items-center mb-5">
-    <h2 class="text-xl font-bold text-gray-800">Preguntas frecuentes</h2>
-      <button  [routerLink]="[ '/Preguntas_respuestas' ]"
-              class="text-blue-600 hover:text-blue-800 font-medium">
+      <h2 class="text-xl font-bold text-gray-800">Preguntas frecuentes</h2>
+      <button [routerLink]="[ '/Preguntas_respuestas' ]" class="text-blue-600 hover:text-blue-800 font-medium">
         <mat-icon class="align-middle mr-1">add</mat-icon>
         PREGUNTAS
-      </button>  
+      </button>
     </div>
-    
+
     <div class="space-y-5">
-      <div *ngFor="let pregunta of preguntasConRespuestas" class="border-b border-gray-100 pb-5 last:border-0 last:pb-0">
+      <div *ngFor="let pregunta of preguntasConRespuestas"
+        class="border-b border-gray-100 pb-5 last:border-0 last:pb-0">
         <div class="flex items-start">
           <div class="flex-1">
             <div class="flex items-center mb-1">
@@ -125,9 +119,9 @@
               <span class="text-sm text-gray-500">{{ pregunta.date | date:'mediumDate' }}</span>
             </div>
             <p class="text-gray-800 mb-3">{{ pregunta.text }}</p>
-            
-            <button (click)="parentMessageId = pregunta.id; messageText = ''" 
-                    class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
+
+            <button (click)="parentMessageId = pregunta.id; messageText = ''"
+              class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
               <mat-icon class="text-base mr-1">reply</mat-icon>
               Responder
             </button>
@@ -143,8 +137,8 @@
               <span class="text-sm text-gray-500">{{ resp.date | date:'mediumDate' }}</span>
             </div>
             <p class="text-gray-800 mb-3">{{ resp.text }}</p>
-            <button (click)="parentMessageId = resp.id; messageText = ''" 
-                    class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
+            <button (click)="parentMessageId = resp.id; messageText = ''"
+              class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
               <mat-icon class="text-base mr-1">reply</mat-icon>
               Responder
             </button>
@@ -157,15 +151,15 @@
   <!-- Formulario de reseña -->
   <div id="reviewForm" class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
     <h2 class="text-xl font-bold text-gray-800 mb-4">Deja tu reseña</h2>
-    
+
     <!-- Indicador de respuesta -->
-    <div *ngIf="parentMessageId" class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6 flex justify-between items-center">
+    <div *ngIf="parentMessageId"
+      class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6 flex justify-between items-center">
       <div class="flex items-center">
         <mat-icon class="text-blue-500 mr-2">info</mat-icon>
         <span class="text-blue-800">Respondiendo al mensaje #{{ parentMessageId }}</span>
       </div>
-      <button (click)="parentMessageId = undefined" 
-              class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+      <button (click)="parentMessageId = undefined" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
         Cancelar
       </button>
     </div>
@@ -174,11 +168,8 @@
     <div class="mb-6">
       <label class="block text-gray-700 font-medium mb-3">Tu calificación</label>
       <div class="flex space-x-1 text-3xl cursor-pointer select-none mb-2">
-        <span *ngFor="let star of [1,2,3,4,5]" 
-              (click)="punctuation = star"
-              (mouseenter)="hoveredStar = star"
-              (mouseleave)="hoveredStar = 0"
-              [ngClass]="{
+        <span *ngFor="let star of [1,2,3,4,5]" (click)="punctuation = star" (mouseenter)="hoveredStar = star"
+          (mouseleave)="hoveredStar = 0" [ngClass]="{
                 'text-yellow-400': star <= (hoveredStar || punctuation),
                 'text-gray-300': star > (hoveredStar || punctuation)
               }">
@@ -189,21 +180,19 @@
     </div>
 
     <!-- Formulario -->
-    <textarea [(ngModel)]="messageText"
-              placeholder="Escribe tu reseña o comentario sobre el producto..."
-              class="w-full h-32 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition mb-4"></textarea>
+    <textarea [(ngModel)]="messageText" placeholder="Escribe tu reseña o comentario sobre el producto..."
+      class="w-full h-32 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition mb-4"></textarea>
 
     <div class="grid md:grid-cols-2 gap-4">
       <button (click)="sendMessage()"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition flex items-center justify-center">
+        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition flex items-center justify-center">
         <mat-icon class="mr-2">send</mat-icon>
         Enviar reseña
       </button>
-      
-      <button (click)="sendQualification()"
-              [disabled]="punctuation < 1 || punctuation > 5"
-              [ngClass]="{'bg-yellow-500 hover:bg-yellow-600': punctuation >= 1 && punctuation <= 5, 'bg-gray-300 cursor-not-allowed': punctuation < 1 || punctuation > 5}"
-              class="text-white font-medium py-3 px-6 rounded-lg transition flex items-center justify-center">
+
+      <button (click)="sendQualification()" [disabled]="punctuation < 1 || punctuation > 5"
+        [ngClass]="{'bg-yellow-500 hover:bg-yellow-600': punctuation >= 1 && punctuation <= 5, 'bg-gray-300 cursor-not-allowed': punctuation < 1 || punctuation > 5}"
+        class="text-white font-medium py-3 px-6 rounded-lg transition flex items-center justify-center">
         <mat-icon class="mr-2">star</mat-icon>
         Solo calificar ({{ punctuation }}★)
       </button>

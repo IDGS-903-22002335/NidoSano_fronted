@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../../services/client';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   selector: 'app-buys-client',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatIconModule],
   templateUrl: './buys-client.html',
   styleUrl: './buys-client.css'
 })
@@ -15,6 +16,7 @@ export class BuysClient  implements OnInit {
   errorMessage = '';
 
   constructor(private clientService: Client) {}
+
 
   ngOnInit(): void {
     this.loadPurchasedProducts();

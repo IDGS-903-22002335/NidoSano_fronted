@@ -2,14 +2,14 @@ import { Component, inject, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
-import { Router, RouterLink } from '@angular/router';
+import { Router} from '@angular/router';
 import { Auth } from '../../services/auth';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatInputModule,RouterLink, MatSnackBarModule,MatIconModule, ReactiveFormsModule],
+  imports: [MatInputModule, MatSnackBarModule,MatIconModule, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
