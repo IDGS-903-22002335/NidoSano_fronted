@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Client } from '../../services/client';
 import { CommonModule } from '@angular/common';
-import { Admin } from '../../services/admin';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; 
 
+import { Client } from '../../services/client';
+import { Admin } from '../../services/admin';
 
 @Component({
   selector: 'app-buys-clientdetail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatSnackBarModule],
   templateUrl: './buys-clientdetail.html',
   styleUrl: './buys-clientdetail.css'
 })
@@ -16,59 +17,70 @@ export class BuysClientdetail implements OnInit {
   products: any[] = [];
   loading = false;
   errorMessage = '';
-saleId: string = '';
+  saleId: string = '';
 
-constructor(
-  private route: ActivatedRoute,
-  private clientService: Client,
-  private adminService: Admin 
-) {}
+  constructor(
+    private route: ActivatedRoute,
+    private clientService: Client,
+    private adminService: Admin,
+    private snackBar: MatSnackBar 
+  ) {}
 
-cancelSale() {
-  const dto = {
-    saleId: this.saleId,      
-    newStatus: 1
-  };
+  cancelSale() {
+    const dto = {
+      saleId: this.saleId,
+      newStatus: 1 
+    };
 
-  console.log('DTO a enviar:', dto); 
+    console.log('DTO a enviar para cancelación:', dto);
 
-  this.adminService.changeSaleStatus(dto).subscribe({
-    next: (res) => {
-      console.log('Venta cancelada:', res);
-      alert(res.mensaje);
-    },
-    error: (err) => {
-      console.error('Error cancelando venta:', err);
-      alert(err.error || 'Error al cancelar la venta.');
-    }
-  });
-}
-
-
-
-
- 
-  ngOnInit(): void {
-  const id = this.route.snapshot.paramMap.get('saleId');
-  if (id) {
-    this.saleId = id; 
-    this.loading = true;
-    this.clientService.getPurchasedProductsByID(id).subscribe({
-      next: (data) => {
-        this.products = data;
-        this.loading = false;
+    this.adminService.changeSaleStatus(dto).subscribe({
+      next: (res) => {
+        console.log('Venta cancelada:', res);
+        this.snackBar.open(res.mensaje || 'Venta cancelada exitosamente.', 'Cerrar', {
+          duration: 3000, 
+          panelClass: ['snackbar-success'] 
+        });
+        this.ngOnInit(); 
       },
       error: (err) => {
-        console.error('Error cargando detalles:', err);
-        this.errorMessage = 'Error al cargar los detalles de la compra.';
-        this.loading = false;
+        console.error('Error cancelando venta:', err);
+        this.snackBar.open(err.error?.mensaje || err.message || 'Error al cancelar la venta.', 'Cerrar', {
+          duration: 5000, 
+          panelClass: ['snackbar-error'] 
+        });
       }
     });
-  } else {
-    this.errorMessage = 'ID de compra no proporcionado.';
   }
-}
 
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('saleId');
+    if (id) {
+      this.saleId = id;
+      this.loading = true;
+      this.clientService.getPurchasedProductsByID(id).subscribe({
+        next: (data) => {
+          this.products = data;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Error cargando detalles:', err);
+          this.errorMessage = 'Error al cargar los detalles de la compra.';
+          this.loading = false;
+          this.snackBar.open(this.errorMessage, 'Cerrar', {
+            duration: 5000,
+            panelClass: ['snackbar-error']
+          });
+        }
+      });
+    } else {
+      this.errorMessage = 'ID de compra no proporcionado.';
+      this.snackBar.open(this.errorMessage, 'Cerrar', {
+        duration: 5000,
+        panelClass: ['snackbar-error']
+      });
+    }
+  }
 
   getTypeLabel(type: number): string {
     const typeLabels = ['Pendiente', 'Cancelado', 'Atendida', 'Enviado', 'Entregado'];
@@ -85,11 +97,12 @@ cancelSale() {
     return widths[type] ?? '0%';
   }
 
+  
   getStatusIcon(type: number): string {
     const icons = [
       'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 
       'M6 18L18 6M6 6l12 12', 
-      'M5 13l4 4L19 7', 
+      'M5 13l4 4L19 7',
       'M8 7l4-4 4 4m0 6l-4 4-4-4', 
       'M5 13l4 4L19 7' 
     ];

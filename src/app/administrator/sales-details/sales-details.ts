@@ -94,7 +94,7 @@ if (!this.saleId || this.saleDetail?.type === undefined || this.saleDetail?.type
   } else if (estadoActual === 3) {
     nuevoEstado = 4; // De Enviado a Entregado
   }  else if (estadoActual === 1 || estadoActual === 4) {
-  this.snackBar.open('La venta ya fue cancelada o entregada.', 'Cerrar', { duration: 3000 });
+  this.snackBar.open('La venta ha sido entregada.', 'Cerrar', { duration: 3000 });
   return;
 } else {
   this.snackBar.open('El estado actual no permite avanzar.', 'Cerrar', { duration: 3000 });
